@@ -1,0 +1,29 @@
+{
+  "name": "wasteof.js",
+  "version": "1.1.0",
+  "description": "package to interact with the wasteof.money api",
+  "main": "./src/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Late-Is-Cool/wasteof.js.git"
+  },
+  "keywords": [
+    "wasteof",
+    "api",
+    "wasteofmoney",
+    "client",
+    "node"
+  ],
+  "author": "latetheidiot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Late-Is-Cool/wasteof.js/issues"
+  },
+  "homepage": "https://github.com/Late-Is-Cool/wasteof.js#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "socket.io-client": "^4.5.1"
+  },
+  "devDependencies": {}
+}
