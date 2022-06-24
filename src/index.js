@@ -59,7 +59,7 @@ class Client {
                         // }
                         oldCount = count;
                         callback(count = count,
-                            mention = newMention
+                            mention = mention.unread[0]
                         );
                     }
                 }

@@ -1,6 +1,6 @@
 {
   "name": "wasteof.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "package to interact with the wasteof.money api",
   "main": "./src/index.js",
   "scripts": {},
