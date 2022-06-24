@@ -47,8 +47,19 @@ class Client {
                     let mention = await this.getUnreadMessages()
                     if (oldCount < count) {
                         oldCount = count;
+                        let newMention = mention.unread[0].data
+                        if (newMention.comment) {
+                            Object.assign(newMention?.comment, {
+                                fContent: newMention?.comment?.content?.replace( /(<([^>]+)>)/ig, '')
+                            })
+                        }
+                        if (newMention.post) {
+                            Object.assign(newMention?.post, {
+                                fContent: newMention?.post?.content?.replace( /(<([^>]+)>)/ig, '')
+                            })
+                        }
                         callback(count = count,
-                            mention = mention.unread[0]
+                            mention = newMention
                         );
                     }
                 }
