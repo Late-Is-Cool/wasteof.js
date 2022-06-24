@@ -44,20 +44,20 @@ class Client {
                     oldCount = count 
                     on = true
                 } else {
-                    let mention = await this.getUnreadMessages()
+                    // let mention = await this.getUnreadMessages()
                     if (oldCount < count) {
+                        // let newMention = mention.unread[0].data
+                        // if (newMention.comment) {
+                        //     Object.assign(newMention?.comment, {
+                        //         fContent: newMention?.comment?.content?.replace( /(<([^>]+)>)/ig, '')
+                        //     })
+                        // }
+                        // if (newMention.post) {
+                        //     Object.assign(newMention?.post, {
+                        //         fContent: newMention?.post?.content?.replace( /(<([^>]+)>)/ig, '')
+                        //     })
+                        // }
                         oldCount = count;
-                        let newMention = mention.unread[0].data
-                        if (newMention.comment) {
-                            Object.assign(newMention?.comment, {
-                                fContent: newMention?.comment?.content?.replace( /(<([^>]+)>)/ig, '')
-                            })
-                        }
-                        if (newMention.post) {
-                            Object.assign(newMention?.post, {
-                                fContent: newMention?.post?.content?.replace( /(<([^>]+)>)/ig, '')
-                            })
-                        }
                         callback(count = count,
                             mention = newMention
                         );
@@ -85,6 +85,19 @@ class Client {
             method: "get",
         });
         const json = await response.data;
+        for (let i = 0; i < json.unread.length; i++) {
+            let newMention = json.unread[i].data
+            if (newMention.comment) {
+                Object.assign(newMention?.comment, {
+                    fContent: newMention?.comment?.content?.replace( /(<([^>]+)>)/ig, '')
+                })
+            }
+            if (newMention.post) {
+                Object.assign(newMention?.post, {
+                    fContent: newMention?.post?.content?.replace( /(<([^>]+)>)/ig, '')
+                })
+            }
+        }
         return json;
     }
     async getSession() {
