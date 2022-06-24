@@ -38,13 +38,13 @@ class Client {
             });
         } else if (parsedEvent === "onmention") {
             var oldCount = 0;
-            let on = false
+            let on = false;
             this.socket.on("updateMessageCount", async (count) => {
                 if (!on) {
-                    oldCount = count 
-                    on = true
+                    oldCount = count;
+                    on = true;
                 } else {
-                    let mention = await this.getUnreadMessages()
+                    let mention = await this.getUnreadMessages();
                     if (oldCount < count) {
                         // let newMention = mention.unread[0].data
                         // if (newMention.comment) {
@@ -58,44 +58,53 @@ class Client {
                         //     })
                         // }
                         oldCount = count;
-                        callback(count = count,
-                            mention = mention.unread[0]
+                        callback(
+                            (mention = mention.unread[0]),
+                            (count = count)
                         );
                     }
                 }
-                
             });
         } else if (parsedEvent === "chatmessage") {
             this.socket.on("message", (data) => {
                 callback({
-                    data: data
-                })
-            })
+                    data: data,
+                });
+            });
         } else {
-            console.error("wasteof.js >> invalid event name, current event names: " + "chatMessage, onMention, ready")
-            return
+            console.error(
+                "wasteof.js >> invalid event name, current event names: " +
+                    "chatMessage, onMention, ready"
+            );
+            return;
         }
     }
     async getUnreadMessages(page) {
         const response = await axios({
             headers: {
-                "Authorization": this.token,
+                Authorization: this.token,
             },
             url: `https://api.wasteof.money/messages/unread?page=${page}`,
             method: "get",
         });
         const json = await response.data;
         for (let i = 0; i < json.unread.length; i++) {
-            let newMention = json.unread[i].data
+            let newMention = json.unread[i].data;
             if (newMention.comment) {
                 Object.assign(newMention?.comment, {
-                    fContent: newMention?.comment?.content?.replace( /(<([^>]+)>)/ig, '')
-                })
+                    fContent: newMention?.comment?.content?.replace(
+                        /(<([^>]+)>)/gi,
+                        ""
+                    ),
+                });
             }
             if (newMention.post) {
                 Object.assign(newMention?.post, {
-                    fContent: newMention?.post?.content?.replace( /(<([^>]+)>)/ig, '')
-                })
+                    fContent: newMention?.post?.content?.replace(
+                        /(<([^>]+)>)/gi,
+                        ""
+                    ),
+                });
             }
         }
         return json;
@@ -103,94 +112,94 @@ class Client {
     async getSession() {
         const response = await axios({
             headers: {
-                "Authorization": this.token
+                Authorization: this.token,
             },
             url: "https://api.wasteof.money/session",
-            method: "get"
-        })
-        const json = await response.data
-        return json
+            method: "get",
+        });
+        const json = await response.data;
+        return json;
     }
     async post(content, repost) {
         const response = await axios({
             headers: {
-                "Authorization": this.token
+                Authorization: this.token,
             },
             data: {
                 post: content,
-                repost: repost
+                repost: repost,
             },
             url: "https://api.wasteof.money/posts",
-            method: "post"
-        })
-        const json = await response.data
-        return json
+            method: "post",
+        });
+        const json = await response.data;
+        return json;
     }
     async editPost(id, content) {
         const response = await axios({
             headers: {
-                "Authorization": this.token
+                Authorization: this.token,
             },
             data: {
-                post: content
+                post: content,
             },
             url: `https://api.wasteof.money/posts/${id}`,
-            method: "put"
-        })
-        const json = await response.data
-        return json
+            method: "put",
+        });
+        const json = await response.data;
+        return json;
     }
     async deletePost(id) {
         const response = await axios({
             headers: {
-                "Authorization": this.token
+                Authorization: this.token,
             },
             url: `https://api.wasteof.money/posts/${id}`,
-            method: "delete"
-        })
-        const json = await response.data
-        return json
+            method: "delete",
+        });
+        const json = await response.data;
+        return json;
     }
     async postComment(postid, content, parent) {
         const response = await axios({
             headers: {
-                "Authorization": this.token
+                Authorization: this.token,
             },
             url: `https://api.wasteof.money/posts/${postid}/comments`,
             method: "post",
             data: {
                 content: content,
-                parent: parent
-            }
-        })
-        const json = await response.data
-        return json
+                parent: parent,
+            },
+        });
+        const json = await response.data;
+        return json;
     }
     async deleteComment(id) {
         const response = await axios({
             headers: {
-                "Authorization": this.token
+                Authorization: this.token,
             },
             url: `https://api.wasteof.money/comments/${id}`,
-            method: "delete"
-        })
-        const json = await response.data
-        return json
+            method: "delete",
+        });
+        const json = await response.data;
+        return json;
     }
     async postWallComment(user, content, parent) {
         const response = await axios({
             headers: {
-                "Authorization": this.token
+                Authorization: this.token,
             },
             url: `https://api.wasteof.money/users/${user}/wall`,
             method: "post",
             data: {
                 content: content,
-                parent: parent
-            }
-        })
-        const json = await response.data
-        return json
+                parent: parent,
+            },
+        });
+        const json = await response.data;
+        return json;
     }
 }
 

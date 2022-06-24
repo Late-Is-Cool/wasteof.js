@@ -35,9 +35,9 @@ client.on("ready", () => {
     console.log("Logged in!")
 })
 
-client.on("onMention", (data) => {
-    if (data.mention?.type === "wall_comment") {
-        client.postWallComment("late", "heya!", data.mention.data.comment._id).catch((error) => console.log(error))
+client.on("onMention", (mention, count) => {
+    if (mention?.type === "wall_comment") {
+        client.postWallComment("late", "heya!", mention.data.comment._id).catch((error) => console.log(error))
     }
 })
 
