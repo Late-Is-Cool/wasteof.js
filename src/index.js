@@ -47,10 +47,9 @@ class Client {
                     let mention = await this.getUnreadMessages()
                     if (oldCount < count) {
                         oldCount = count;
-                        callback({
-                            count: count,
-                            mention: mention.unread[0]
-                        });
+                        callback(count = count,
+                            mention = mention.unread[0]
+                        );
                     }
                 }
                 
