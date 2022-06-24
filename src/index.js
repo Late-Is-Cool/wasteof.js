@@ -44,7 +44,7 @@ class Client {
                     oldCount = count 
                     on = true
                 } else {
-                    // let mention = await this.getUnreadMessages()
+                    let mention = await this.getUnreadMessages()
                     if (oldCount < count) {
                         // let newMention = mention.unread[0].data
                         // if (newMention.comment) {
